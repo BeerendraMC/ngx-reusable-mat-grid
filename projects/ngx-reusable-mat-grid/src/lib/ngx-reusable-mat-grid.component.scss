@@ -1,0 +1,94 @@
+table {
+  width: 100%;
+}
+
+.mat-elevation-z8 {
+  box-shadow: none;
+}
+
+tr.mat-mdc-row {
+  height: 56px;
+}
+
+.search-field.mat-mdc-form-field {
+  width: 28%;
+  display: flex;
+  margin-left: auto;
+  padding-top: 5px;
+}
+
+td.mat-mdc-cell a,
+td.mat-mdc-cell a:hover,
+td.mat-mdc-cell a:focus,
+td.mat-mdc-cell a:active {
+  color: #0a8eda;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+td.mat-mdc-cell .description {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+  letter-spacing: 0.41px;
+  line-height: 16px;
+}
+
+.no-data-message,
+.loading-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  font-size: 20px;
+}
+
+.th-right ::ng-deep .mat-sort-header-container {
+  justify-content: flex-end;
+}
+
+.td-right {
+  text-align: right;
+}
+
+.th-center ::ng-deep .mat-sort-header-container {
+  justify-content: center;
+}
+
+.td-center {
+  text-align: center;
+}
+
+.padding-right {
+  padding-right: 16px;
+}
+
+.sticky-first-last-columns {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.sticky-first-last-columns td.mat-mdc-table-sticky {
+  background: unset;
+}
+
+@media only screen and (max-width: 1023px) {
+  .sticky-first-last-columns td.mat-mdc-table-sticky {
+    background: rgb(255, 255, 255);
+  }
+
+  .sticky-first-last-columns {
+    overflow-x: auto;
+  }
+
+  .sticky-first-last-columns table {
+    width: 1000px;
+  }
+
+  .sticky-first-last-columns .mat-mdc-table-sticky:first-child {
+    border-right: 1px solid #e0e0e0;
+  }
+
+  .sticky-first-last-columns .mat-mdc-table-sticky:last-child {
+    border-left: 1px solid #e0e0e0;
+  }
+}

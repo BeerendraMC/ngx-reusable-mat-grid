@@ -1,0 +1,11 @@
+.home-town-container {
+  display: flex;
+  align-items: center;
+}
+
+.home-town-container a {
+  color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  text-decoration: none;
+  padding-left: 4px;
+}
