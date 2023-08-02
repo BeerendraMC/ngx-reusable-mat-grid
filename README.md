@@ -1,27 +1,168 @@
-# NgxReusableMatGridDemo
+# NgxReusableMatGrid
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.2.
+This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
 
-## Development server
+NgxReusableMatGrid is a configurable and re-usable table component built on angular using [Angular Material data table](https://material.angular.io/components/table/overview).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## How to install?
 
-## Code scaffolding
+> `npm install ngx-reusable-mat-grid`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Usage
 
-## Build
+```typescript
+import { NgxReusableMatGridModule } from "ngx-reusable-mat-grid";
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Register `NgxReusableMatGridModule` in your root module and use the component as below:
 
-## Running unit tests
+```html
+<ngx-reusable-mat-grid
+  [gridConfig]="gridConfiguration"
+  [displayedColumns]="displayedColumns"
+  [dataSource]="Items"
+  [defaultSortColumn]="{ name: 'fieldName', sortDirection: 'desc' }"
+  [verticalScrollOffsetInRows]="5"
+  [searchOption]="{
+		onColumn: 'fieldName',
+		searchTextBoxLabel: 'Search by fieldName'
+  }"
+  [freezeFirstAndLastColumns]="true"
+  (linkClick)="onLinkClick($event)"
+  (selectionChange)="onDropdownChange($event)"
+>
+</ngx-reusable-mat-grid>
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+You can import `ColumnType` enum and `GridConfig` model from `ngx-reusable-mat-grid`
 
-## Running end-to-end tests
+```typescript
+import { ColumnType, GridConfig } from "ngx-reusable-mat-grid";
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Documentation
 
-## Further help
+This component dynamically renders the grid using `GridConfig` as Input array of objects where each object represents the configuration of a given column. And two events are exposed as output objects, respective actions can be taken on parent components.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+This has capability to integrate with any API response format and each actions can be controlled from parent components.
+
+This component also supports `custom CSS` (column level), `hyperlink`, `hyperlink and description`, `dropdown` and `custom templates`.
+
+### `Output` events:
+
+- `linkClick`: event emitted on click of hyperlink with the respective row data object.
+- `selectionChange`: event emitted on selection change of dropdown with the respective row data object and the selected value.
+
+Here are the GridConfig, DropdownValue interfaces and ColumnType enum:
+
+```typescript
+export enum ColumnType {
+  Text,
+  Date,
+  Link,
+  Dropdown,
+  LinkAndDescription,
+  CustomTemplate,
+}
+
+export interface GridConfig {
+  name: string;
+  label: string;
+  columnType: ColumnType;
+  style?: {};
+  sort?: boolean;
+  dropdownValues?: DropdownValue[];
+  align?: "right" | "center";
+  customTemplate?: TemplateRef<any>;
+}
+
+export interface DropdownValue {
+  value: string | number;
+  viewValue: string | number;
+}
+```
+
+### `GridConfig` properties:
+
+- `name`: represents the name of the property to bind to. This should match the property name of your model
+- `label`: represents the column header label to display on the grid
+- `columnType`: it’s of type ColumnType enum. It represents what kind of values that the column is going to have. The Date column will display date objects in ‘MMM dd, yyyy’ format
+- `style`: style object. Styles provided here will apply to the respective column
+- `sort`: represents whether the sort option is required on the column or not (defaults to false)
+- `dropdownValues`: an array of objects representing the dropdown options
+- `align`: represents the column alignment (defaults to left)
+- `customTemplate`: represents the reference to the custom template
+
+### Sample Configuration array
+
+```typescript
+gridConfiguration: GridConfig[] = [
+  { name: 'id', label: 'Id', columnType: ColumnType.Text, sort: true, style: { width: '5%' } },
+  { name: 'name', label: 'Name', columnType: ColumnType.LinkAndDescription, sort: true, style: { width: '20%' } },
+  {
+    name: 'gender',
+    label: 'Gender',
+    columnType: ColumnType.Dropdown,
+    sort: true,
+    style: { width: '100px' },
+    dropdownValues: [
+      { value: 'male', viewValue: 'Male' },
+      { value: 'female', viewValue: 'Female' }
+    ]
+  },
+  {
+    name: 'phone',
+    label: 'Phone',
+    columnType: ColumnType.Text,
+    sort: true,
+    style: { width: '10%' }
+  },
+  {
+    name: 'dob',
+    label: 'DOB',
+    columnType: ColumnType.Date,
+    sort: true,
+    align: 'right',
+    style: { width: '15%' }
+  },
+  {
+    name: 'email',
+    label: 'Email',
+    columnType: ColumnType.Text,
+    align: 'center',
+    style: { width: '15%' }
+  },
+  {
+    name: 'homeTown',
+    label: 'Home Town',
+    columnType: ColumnType.CustomTemplate,
+    customTemplate: this.homeTownTemplate,
+    sort: true,
+    style: { width: '15%' }
+  },
+  {
+    name: 'action',
+    label: 'Action',
+    columnType: ColumnType.CustomTemplate,
+    customTemplate: this.actionTemplate,
+    sort: false,
+    style: { width: '5%' }
+  }
+]
+```
+
+### List of Features supported by Grid component
+
+- Sort on individual column and default sort option.
+- Search (Globally or on a particular column or on any two columns. For global filter you must pass ‘globalFilter’ string to the ‘onColumn’ property of ‘searchOption’ input object).
+- Optional pagination.
+- Configurable page size options.
+- Vertical scroll bar if the user selects more than the given no of rows per page (that number is configurable). When the user selects 20 rows per page from the page size options the height of the grid increases but our customer wanted to freeze the height to display a certain no of rows (10 or 5) and introduce a vertical scroll if the user wants to view more rows than that number.
+- Hyperlink.
+- Hyperlink and description.
+- Dropdown.
+- Multiple Custom Template columns.
+- Custom CSS (column level).
+- Spinner (while fetching data from the api).
+- Configurable message to display when there is no data (defaults to ‘No data available.’).
+- Freezing first and last columns for mobile devices (screens < 1024px width) and introduce horizontal scroll bar.
