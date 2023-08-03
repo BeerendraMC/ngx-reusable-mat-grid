@@ -18,9 +18,9 @@ import { MatButtonModule } from '@angular/material/button';
     NgxReusableMatGridModule,
     MatIconModule,
     HttpClientModule,
-    MatButtonModule,
+    MatButtonModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

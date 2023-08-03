@@ -24,8 +24,8 @@ Register `NgxReusableMatGridModule` in your root module and use the component as
   [defaultSortColumn]="{ name: 'fieldName', sortDirection: 'desc' }"
   [verticalScrollOffsetInRows]="5"
   [searchOption]="{
-		onColumn: 'fieldName',
-		searchTextBoxLabel: 'Search by fieldName'
+	onColumn: 'fieldName',
+	searchTextBoxLabel: 'Search by fieldName'
   }"
   [freezeFirstAndLastColumns]="true"
   (linkClick)="onLinkClick($event)"
@@ -62,7 +62,7 @@ export enum ColumnType {
   Link,
   Dropdown,
   LinkAndDescription,
-  CustomTemplate,
+  CustomTemplate
 }
 
 export interface GridConfig {
@@ -72,7 +72,7 @@ export interface GridConfig {
   style?: {};
   sort?: boolean;
   dropdownValues?: DropdownValue[];
-  align?: "right" | "center";
+  align?: 'right' | 'center';
   customTemplate?: TemplateRef<any>;
 }
 

@@ -6,7 +6,7 @@ import { EmployeeService } from './employee.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   gridConfiguration!: GridConfig[];
@@ -36,14 +36,14 @@ export class AppComponent {
         label: 'Id',
         columnType: ColumnType.Text,
         sort: true,
-        style: { width: '5%' },
+        style: { width: '5%' }
       },
       {
         name: 'name',
         label: 'Name',
         columnType: ColumnType.LinkAndDescription,
         sort: true,
-        style: { width: '20%' },
+        style: { width: '20%' }
       },
       {
         name: 'gender',
@@ -53,15 +53,15 @@ export class AppComponent {
         style: { width: '130px' },
         dropdownValues: [
           { value: 'male', viewValue: 'Male' },
-          { value: 'female', viewValue: 'Female' },
-        ],
+          { value: 'female', viewValue: 'Female' }
+        ]
       },
       {
         name: 'phone',
         label: 'Phone',
         columnType: ColumnType.Text,
         sort: true,
-        style: { width: '10%' },
+        style: { width: '10%' }
       },
       {
         name: 'dob',
@@ -69,14 +69,14 @@ export class AppComponent {
         columnType: ColumnType.Date,
         sort: true,
         align: 'right',
-        style: { width: '15%' },
+        style: { width: '15%' }
       },
       {
         name: 'email',
         label: 'Email',
         columnType: ColumnType.Text,
         align: 'center',
-        style: { width: '15%' },
+        style: { width: '15%' }
       },
       {
         name: 'homeTown',
@@ -84,7 +84,7 @@ export class AppComponent {
         columnType: ColumnType.CustomTemplate,
         customTemplate: this.homeTownTemplate,
         sort: true,
-        style: { width: '15%' },
+        style: { width: '15%' }
       },
       {
         name: 'action',
@@ -92,45 +92,37 @@ export class AppComponent {
         columnType: ColumnType.CustomTemplate,
         customTemplate: this.actionTemplate,
         sort: false,
-        style: { width: '5%' },
-      },
+        style: { width: '5%' }
+      }
     ];
 
-    this.displayedColumns = [
-      'name',
-      'gender',
-      'phone',
-      'dob',
-      'email',
-      'homeTown',
-      'action',
-    ];
+    this.displayedColumns = ['name', 'gender', 'phone', 'dob', 'email', 'homeTown', 'action'];
   }
 
   getEmps(): void {
     this.employeeService.getEmployees().subscribe(
       (data: IEmployee[]) => {
         const empData: IEmployee[] = data.map(
-          (emp) =>
+          emp =>
             ({
               id: emp.id,
               name: {
                 Link: emp.name,
                 Description: emp.description,
-                SearchSortField: 'Link',
+                SearchSortField: 'Link'
               },
               gender: emp.gender,
               phone: emp.phone,
               dob: emp.dob ? new Date(emp.dob) : null,
               email: emp.email,
-              homeTown: { ...emp.homeTown, SearchSortField: 'name' },
-            } as IEmployee)
+              homeTown: { ...emp.homeTown, SearchSortField: 'name' }
+            }) as IEmployee
         );
         setTimeout(() => {
           this.Employees = empData;
         }, 2000);
       },
-      (err) => {
+      err => {
         this.Employees = []; // This stops the loader and shows no data message on the grid
         console.error(err);
       }

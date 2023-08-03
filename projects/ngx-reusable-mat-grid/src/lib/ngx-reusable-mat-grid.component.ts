@@ -1,13 +1,4 @@
-import {
-  Component,
-  OnChanges,
-  Input,
-  ViewChild,
-  Output,
-  EventEmitter,
-  SimpleChanges,
-  OnInit,
-} from '@angular/core';
+import { Component, OnChanges, Input, ViewChild, Output, EventEmitter, SimpleChanges, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { MatSort, Sort, SortDirection } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -18,7 +9,7 @@ import { ColumnType, GridConfig } from './models';
 @Component({
   selector: 'ngx-reusable-mat-grid',
   templateUrl: './ngx-reusable-mat-grid.component.html',
-  styleUrls: ['./ngx-reusable-mat-grid.component.scss'],
+  styleUrls: ['./ngx-reusable-mat-grid.component.scss']
 })
 export class NgxReusableMatGridComponent {
   /** Main grid configuration array, where each object represents the configurations of one column. */
@@ -121,17 +112,13 @@ export class NgxReusableMatGridComponent {
       const maxHeight = 56 * (this.verticalScrollOffsetInRows + 1);
       this.tableScrollStyle = {
         'max-height': `${maxHeight}px`,
-        'overflow-y': 'auto',
+        'overflow-y': 'auto'
       };
     }
-    if (
-      changes['defaultSortColumn'] &&
-      changes['defaultSortColumn'].firstChange &&
-      this.defaultSortColumn
-    ) {
+    if (changes['defaultSortColumn'] && changes['defaultSortColumn'].firstChange && this.defaultSortColumn) {
       this.sortState = {
         active: this.defaultSortColumn.name,
-        direction: this.defaultSortColumn.sortDirection,
+        direction: this.defaultSortColumn.sortDirection
       };
       this.sort.active = this.sortState.active;
       this.sort.direction = this.sortState.direction;
@@ -142,23 +129,15 @@ export class NgxReusableMatGridComponent {
       if (this.requirePagination) {
         this.gridDataSource.paginator = this.paginator;
       }
-      this.gridDataSource.sortingDataAccessor = (
-        data: any,
-        property: string
-      ) => {
+      this.gridDataSource.sortingDataAccessor = (data: any, property: string) => {
         if (!data[property]) {
           return null;
         }
         if (typeof data[property] === 'string') {
           return data[property].toLowerCase();
-        } else if (
-          typeof data[property] === 'object' &&
-          typeof data[property].getDate !== 'function'
-        ) {
+        } else if (typeof data[property] === 'object' && typeof data[property].getDate !== 'function') {
           const dataObj = data[property];
-          return dataObj[dataObj.SearchSortField]
-            ? (dataObj[dataObj.SearchSortField] as string).toLowerCase()
-            : null;
+          return dataObj[dataObj.SearchSortField] ? (dataObj[dataObj.SearchSortField] as string).toLowerCase() : null;
         }
         return data[property];
       };
@@ -211,13 +190,10 @@ export class NgxReusableMatGridComponent {
     if (!data || !filter) {
       returnValue = false;
     } else if (data instanceof Date) {
-      returnValue =
-        this.datePipe.transform(data)?.toLowerCase().indexOf(filter) !== -1;
+      returnValue = this.datePipe.transform(data)?.toLowerCase().indexOf(filter) !== -1;
     } else if (typeof data === 'object') {
       returnValue = data[data.SearchSortField]
-        ? (data[data.SearchSortField] as string)
-            .toLowerCase()
-            .indexOf(filter) !== -1
+        ? (data[data.SearchSortField] as string).toLowerCase().indexOf(filter) !== -1
         : false;
     } else {
       returnValue = data.toString().toLowerCase().indexOf(filter) !== -1;
@@ -233,18 +209,9 @@ export class NgxReusableMatGridComponent {
     const myFilterPredicate = (data: any, filter: string) => {
       let isMatched = false;
       if (this.searchOption?.onColumn) {
-        isMatched = this.isSearchTermMatched(
-          data[this.searchOption.onColumn],
-          filter
-        );
-      } else if (
-        this.searchOption?.onTwoColumns &&
-        this.searchOption.onTwoColumns.length > 1
-      ) {
-        const onTwoColumnsData = [
-          data[this.searchOption.onTwoColumns[0]],
-          data[this.searchOption.onTwoColumns[1]],
-        ];
+        isMatched = this.isSearchTermMatched(data[this.searchOption.onColumn], filter);
+      } else if (this.searchOption?.onTwoColumns && this.searchOption.onTwoColumns.length > 1) {
+        const onTwoColumnsData = [data[this.searchOption.onTwoColumns[0]], data[this.searchOption.onTwoColumns[1]]];
         if (!onTwoColumnsData[0]) {
           isMatched = this.isSearchTermMatched(onTwoColumnsData[1], filter);
         } else if (!onTwoColumnsData[1]) {
@@ -252,72 +219,37 @@ export class NgxReusableMatGridComponent {
         } else {
           // tslint:disable-next-line: one-variable-per-declaration
           let dataObj0, dataObj1;
-          if (
-            onTwoColumnsData[0] instanceof Date &&
-            onTwoColumnsData[1] instanceof Date
-          ) {
+          if (onTwoColumnsData[0] instanceof Date && onTwoColumnsData[1] instanceof Date) {
             isMatched =
-              this.datePipe
-                .transform(onTwoColumnsData[0])
-                ?.toLowerCase()
-                .indexOf(filter) !== -1 ||
-              this.datePipe
-                .transform(onTwoColumnsData[1])
-                ?.toLowerCase()
-                .indexOf(filter) !== -1;
-          } else if (
-            onTwoColumnsData[0] instanceof Date &&
-            typeof onTwoColumnsData[1] === 'object'
-          ) {
+              this.datePipe.transform(onTwoColumnsData[0])?.toLowerCase().indexOf(filter) !== -1 ||
+              this.datePipe.transform(onTwoColumnsData[1])?.toLowerCase().indexOf(filter) !== -1;
+          } else if (onTwoColumnsData[0] instanceof Date && typeof onTwoColumnsData[1] === 'object') {
             dataObj1 = onTwoColumnsData[1];
             isMatched =
-              this.datePipe
-                .transform(onTwoColumnsData[0])
-                ?.toLowerCase()
-                .indexOf(filter) !== -1 ||
+              this.datePipe.transform(onTwoColumnsData[0])?.toLowerCase().indexOf(filter) !== -1 ||
               (dataObj1[dataObj1.SearchSortField]
-                ? (dataObj1[dataObj1.SearchSortField] as string)
-                    .toLowerCase()
-                    .indexOf(filter) !== -1
+                ? (dataObj1[dataObj1.SearchSortField] as string).toLowerCase().indexOf(filter) !== -1
                 : false);
-          } else if (
-            typeof onTwoColumnsData[0] === 'object' &&
-            onTwoColumnsData[1] instanceof Date
-          ) {
+          } else if (typeof onTwoColumnsData[0] === 'object' && onTwoColumnsData[1] instanceof Date) {
             dataObj0 = onTwoColumnsData[0];
             isMatched =
               (dataObj0[dataObj0.SearchSortField]
-                ? (dataObj0[dataObj0.SearchSortField] as string)
-                    .toLowerCase()
-                    .indexOf(filter) !== -1
-                : false) ||
-              this.datePipe
-                .transform(onTwoColumnsData[1])
-                ?.toLowerCase()
-                .indexOf(filter) !== -1;
-          } else if (
-            typeof onTwoColumnsData[0] === 'object' &&
-            typeof onTwoColumnsData[1] === 'object'
-          ) {
+                ? (dataObj0[dataObj0.SearchSortField] as string).toLowerCase().indexOf(filter) !== -1
+                : false) || this.datePipe.transform(onTwoColumnsData[1])?.toLowerCase().indexOf(filter) !== -1;
+          } else if (typeof onTwoColumnsData[0] === 'object' && typeof onTwoColumnsData[1] === 'object') {
             dataObj0 = onTwoColumnsData[0];
             dataObj1 = onTwoColumnsData[1];
             isMatched =
               (dataObj0[dataObj0.SearchSortField]
-                ? (dataObj0[dataObj0.SearchSortField] as string)
-                    .toLowerCase()
-                    .indexOf(filter) !== -1
+                ? (dataObj0[dataObj0.SearchSortField] as string).toLowerCase().indexOf(filter) !== -1
                 : false) ||
               (dataObj1[dataObj1.SearchSortField]
-                ? (dataObj1[dataObj1.SearchSortField] as string)
-                    .toLowerCase()
-                    .indexOf(filter) !== -1
+                ? (dataObj1[dataObj1.SearchSortField] as string).toLowerCase().indexOf(filter) !== -1
                 : false);
           } else {
             isMatched =
-              onTwoColumnsData[0].toString().toLowerCase().indexOf(filter) !==
-                -1 ||
-              onTwoColumnsData[1].toString().toLowerCase().indexOf(filter) !==
-                -1;
+              onTwoColumnsData[0].toString().toLowerCase().indexOf(filter) !== -1 ||
+              onTwoColumnsData[1].toString().toLowerCase().indexOf(filter) !== -1;
           }
         }
       }
@@ -335,11 +267,7 @@ export class NgxReusableMatGridComponent {
     } else if (data[key] instanceof Date) {
       search += this.datePipe.transform(data[key])?.toLowerCase();
     } else if (typeof data[key] === 'object') {
-      search = this.nestedFilterCheck(
-        search,
-        data[key],
-        data[key].SearchSortField
-      );
+      search = this.nestedFilterCheck(search, data[key], data[key].SearchSortField);
       /**
        * Use below logic to reduce all the object values and to search by all the fields of the objects.
        * for (const k in data[key]) {
@@ -378,10 +306,8 @@ export class NgxReusableMatGridComponent {
   isStickyHeader(): boolean {
     if (this.gridDataSource && this.verticalScrollOffsetInRows) {
       return (
-        (this.gridDataSource?.paginator?.pageSize ?? 0) >
-          this.verticalScrollOffsetInRows ||
-        (!this.requirePagination &&
-          this.dataSource?.length > this.verticalScrollOffsetInRows)
+        (this.gridDataSource?.paginator?.pageSize ?? 0) > this.verticalScrollOffsetInRows ||
+        (!this.requirePagination && this.dataSource?.length > this.verticalScrollOffsetInRows)
       );
     }
     return false;

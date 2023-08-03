@@ -27,10 +27,7 @@
       <pre>{{ genderChangeData | json }}</pre>
     </div>
     <div *ngIf="clickedEmployee" style="border: 1px solid black">
-      <span
-        >Data emitted by customTemplate from
-        {{ customTemplateColumn | uppercase }} column:</span
-      >
+      <span>Data emitted by customTemplate from {{ customTemplateColumn | uppercase }} column:</span>
       <pre>{{ clickedEmployee | json }}</pre>
     </div>
   </div>
@@ -39,11 +36,7 @@
 <ng-template #homeTownTemplate let-rowData>
   <span class="home-town-container">
     <span>{{ rowData?.homeTown?.name }}</span>
-    <a
-      [href]="rowData?.homeTown?.link"
-      target="_blank"
-      (click)="onHomeTownClick(rowData)"
-    >
+    <a [href]="rowData?.homeTown?.link" target="_blank" (click)="onHomeTownClick(rowData)">
       <mat-icon>launch</mat-icon>
     </a>
   </span>

@@ -6,7 +6,7 @@ export enum ColumnType {
   Link,
   Dropdown,
   LinkAndDescription,
-  CustomTemplate,
+  CustomTemplate
 }
 
 export interface GridConfig {

@@ -11,7 +11,7 @@ NgxReusableMatGrid is a configurable and re-usable table component built on angu
 ## Usage
 
 ```typescript
-import { NgxReusableMatGridModule } from "ngx-reusable-mat-grid";
+import { NgxReusableMatGridModule } from 'ngx-reusable-mat-grid';
 ```
 
 Register `NgxReusableMatGridModule` in your root module and use the component as below:
@@ -24,8 +24,8 @@ Register `NgxReusableMatGridModule` in your root module and use the component as
   [defaultSortColumn]="{ name: 'fieldName', sortDirection: 'desc' }"
   [verticalScrollOffsetInRows]="5"
   [searchOption]="{
-		onColumn: 'fieldName',
-		searchTextBoxLabel: 'Search by fieldName'
+	onColumn: 'fieldName',
+	searchTextBoxLabel: 'Search by fieldName'
   }"
   [freezeFirstAndLastColumns]="true"
   (linkClick)="onLinkClick($event)"
@@ -37,7 +37,7 @@ Register `NgxReusableMatGridModule` in your root module and use the component as
 You can import `ColumnType` enum and `GridConfig` model from `ngx-reusable-mat-grid`
 
 ```typescript
-import { ColumnType, GridConfig } from "ngx-reusable-mat-grid";
+import { ColumnType, GridConfig } from 'ngx-reusable-mat-grid';
 ```
 
 ## Documentation
@@ -62,7 +62,7 @@ export enum ColumnType {
   Link,
   Dropdown,
   LinkAndDescription,
-  CustomTemplate,
+  CustomTemplate
 }
 
 export interface GridConfig {
@@ -72,7 +72,7 @@ export interface GridConfig {
   style?: {};
   sort?: boolean;
   dropdownValues?: DropdownValue[];
-  align?: "right" | "center";
+  align?: 'right' | 'center';
   customTemplate?: TemplateRef<any>;
 }
 

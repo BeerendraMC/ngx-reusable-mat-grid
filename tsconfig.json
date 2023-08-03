@@ -12,9 +12,7 @@
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "paths": {
-      "ngx-reusable-mat-grid": [
-        "dist/ngx-reusable-mat-grid"
-      ]
+      "ngx-reusable-mat-grid": ["dist/ngx-reusable-mat-grid"]
     },
     "declaration": false,
     "downlevelIteration": true,
@@ -24,10 +22,7 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
-    "lib": [
-      "ES2022",
-      "dom"
-    ]
+    "lib": ["ES2022", "dom"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

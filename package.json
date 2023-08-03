@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "concurrently \"json-server ./employeesData.json\" \"ng serve -o\"",
+    "prettier": "prettier --write \"**/*.{js,json,css,scss,less,md,ts,html,component.html}\"",
     "build": "ng build",
     "build:lib:watch": "ng build ngx-reusable-mat-grid --watch",
     "build:lib:prod": "ng build ngx-reusable-mat-grid --configuration production",
@@ -40,6 +41,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
     "ng-packagr": "^16.0.0",
+    "prettier": "3.0.1",
     "typescript": "~5.0.2"
   }
 }

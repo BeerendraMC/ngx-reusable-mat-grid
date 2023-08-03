@@ -24,9 +24,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatSelectModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    MatButtonModule,
+    MatButtonModule
   ],
   providers: [DatePipe],
-  exports: [NgxReusableMatGridComponent],
+  exports: [NgxReusableMatGridComponent]
 })
 export class NgxReusableMatGridModule {}
